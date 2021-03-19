@@ -15,7 +15,7 @@ public class Gradle {
     // What is gradle wrapper? Why are we using it instead of gradle?
     // Answer: Gradle wrapper is script which is added to Gradle project and its used to execute the build.
     // We are using it instead of gradle because we don't need to have gradle installed in the machine if we
-    // use gradle wrapper , It also guarantees the exect version we need to work on our project.
+    // use gradle wrapper , It also guarantees the exact version we need to work on our project.
 
     //todo C
     // Name 3 different benefits or reasons for using gradle
