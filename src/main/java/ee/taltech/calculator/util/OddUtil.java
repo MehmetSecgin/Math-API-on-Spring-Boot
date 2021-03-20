@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 public class OddUtil {
 
     public static List<Integer> odds(List<Integer> input) {
-        if (input.isEmpty())
+        if (input == null || input.isEmpty())
             return null;
         return input
                 .stream()
@@ -15,7 +15,7 @@ public class OddUtil {
     }
 
     public static Integer sumOfOdds(List<Integer> input) {
-        if (input.isEmpty())
+        if (input == null || input.isEmpty())
             return null;
 
         return odds(input)
