@@ -1,4 +1,4 @@
-#Team09 Spring Boot Project.
+# Team09 Spring Boot Project.
 By Mehmet Ali Seçgin and Fothul Karim Forhan
 ___
 There's two calculators.
@@ -14,7 +14,7 @@ Calculator 2 will do:
 * SumOfOdd
 * AverageOfPositives
 ___
-##How to use
+## How to use
 >#### Calculator 1
 >>Simply, go to
 >>- __[localhost:8080/calculator/calculate1?input=1,-2,5](localhost:8080/calculator/calculate1?input=1,-2,5)__
