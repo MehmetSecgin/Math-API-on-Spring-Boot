@@ -9,7 +9,7 @@ import java.util.List;
 @Setter
 public class CalculationResult {
     private Integer min;
-    private Float averageOfPositives;
+    private Double averageOfPositives;
     private List<Integer> odds;
     private Integer sumOfOdds;
     private List<Integer> powerOfFour;

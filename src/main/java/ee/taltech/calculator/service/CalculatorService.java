@@ -23,6 +23,7 @@ public class CalculatorService {
         CalculationResult result = new CalculationResult();
         result.setOdds(OddUtil.odds(input));
         result.setSumOfOdds(OddUtil.sumOfOdds(input));
+        result.setAverageOfPositives(AvgOfPosUtil.avgOfPositives(input));
         return result;
     }
 }
