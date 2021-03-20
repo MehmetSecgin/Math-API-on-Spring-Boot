@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 
 public class AvgOfPosUtil {
     public static Double avgOfPositives(List<Integer> input) {
-        if (input.isEmpty())
+        if (input == null || input.isEmpty())
             return null;
 
         input = input
