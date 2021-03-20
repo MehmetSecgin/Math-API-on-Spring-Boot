@@ -43,4 +43,29 @@ public class CalculatorControllerTest {
                 .andExpect(jsonPath("$.sumOfOdds").value(6))
                 .andExpect(jsonPath("$.powerOfFour[0]").value(1));
     }
+    @Test
+
+    @DisplayName("calculate2 must have string input")
+    void calculate2MustHaveStringInput() throws Exception {
+        mvc.perform(MockMvcRequestBuilders.get("/calculator/calculate2"))
+                .andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    @DisplayName("calculate2 does not fail on empty input")
+    void calculate2DoesNotFailOnEmptyInput() throws Exception {
+        mvc.perform(MockMvcRequestBuilders.get("/calculator/calculate2?input="))
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(content().string("{}"));
+    }
+
+    @Test
+    @DisplayName("calculate2 returns a response")
+    void calculate2DoesReturnAResponse() throws Exception {
+        mvc.perform(MockMvcRequestBuilders.get("/calculator/calculate2?input=1,-2,5"))
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(jsonPath("$.averageOfPositives").value(3))
+                .andExpect(jsonPath("$.odds[0]").value(1))
+                .andExpect(jsonPath("$.sumOfOdds").value(6));
+    }
 }
