@@ -1,5 +1,6 @@
 package ee.taltech.calculator.service;
 
+
 import ee.taltech.calculator.dto.CalculationResult;
 import ee.taltech.calculator.util.*;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,8 @@ public class CalculatorService {
     public CalculationResult calculate1(List<Integer> input) {
         CalculationResult result = new CalculationResult();
         result.setSumOfOdds(OddUtil.sumOfOdds(input));
+        result.setMin(MinUtil.min(input));
+        result.setPowerOfFour(PowerOfUtil.powerOfFour(input));
         return result;
     }
 
