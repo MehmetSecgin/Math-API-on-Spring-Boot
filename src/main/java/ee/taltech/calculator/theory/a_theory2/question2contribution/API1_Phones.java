@@ -1,5 +1,13 @@
 package ee.taltech.calculator.theory.a_theory2.question2contribution;
 
+import ee.taltech.calculator.theory.a_theory2.question2contribution.classes.Phone;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.*;
+import java.util.stream.Collectors;
+
 public class API1_Phones {
 
     // todo this is contribution question
@@ -16,13 +24,82 @@ public class API1_Phones {
     //todo practical assignment
     // Management wants to define an API endpoint so frontend can display data about phones (think phone e-shop)
     // A Add necessary annotations to this class so this class can serve data
-    // B Add a method to query all the phones (method content is not important - I am grading urls, annotations, names, and parameters)
-    // C Add a method to query a single phone by it's unique identifier (method content is not important - I am grading urls, annotations, names, and parameters)
-    // D Modify an existing method to query/filter phones by manufacturer while keeping existing functionality
-    // E Modify an existing method to query/filter phones by release year while keeping existing functionality
+
+    //Done with Lomboks Getter and Setter
+
+    //todo B Add a method to query all the phones (method content is not important - I am grading urls, annotations, names, and parameters)
+
+    @GetMapping(value = "/phones")
+    public List<Phone> getAllPhones() {
+        List<Phone> phones = new ArrayList<>();
+        phones.add(new Phone());
+        phones.add(new Phone());
+
+        return phones;
+    }
+    //todo C Add a method to query a single phone by it's unique identifier (method content is not important - I am grading urls, annotations, names, and parameters)
+
+    @GetMapping(value = "/phones")
+    public List<Phone> getPhone(
+            @RequestParam Long id,
+            @RequestParam Optional<String> manufacturer,
+            @RequestParam Optional<String> year)
+    {
+
+        if (manufacturer.isPresent())
+            return getAllPhones()
+                    .stream()
+                    .filter(phone -> phone.getManufacturer().equals(manufacturer))
+                    .collect(Collectors.toList());
+        else if (year.isPresent())
+            return getAllPhones()
+                    .stream()
+                    .filter(phone -> phone.getReleaseYear().equals(year))
+                    .collect(Collectors.toList());
+        else
+            return getAllPhones()
+                    .stream()
+                    .filter(phone -> phone.getId().equals(id))
+                    .collect(Collectors.toList());
+    }
+
+
+    //todo D Modify an existing method to query/filter phones by manufacturer while keeping existing functionality
+    //todo E Modify an existing method to query/filter phones by release year while keeping existing functionality
 
     //todo theoretical assignment
-    // F write pseudocode for saving a new phone (add annotations or http method names, urls, necessary parameters)
-    // G write pseudocode for updating existing phone (add annotations or http method names, urls, necessary parameters)
-    // H write pseudocode for deleting a phone (add annotations or http method names, urls, necessary parameters)
+    //todo F write pseudocode for saving a new phone (add annotations or http method names, urls, necessary parameters)
+    //  *
+    // @RestController
+    // @PutMapping /newPhone?input=
+    // @Pathvariable
+    // create new phone
+    // set id to phone
+    // set manufacturer to phone
+    // set modelNr to phone
+    // set rating to phone
+    // set releaseYear to phone
+    // return new phone
+
+    //todo G write pseudocode for updating existing phone (add annotations or http method names, urls, necessary parameters)
+    //  *
+    //  @PutMapping("/{id}?input=")
+    //  @RequestParam("phones/{id}" Long) @PathVariable List input
+    //  List result = input stream
+    //  if stream contains id
+    //      get phone by id
+    //      get phones manufacturer
+    //      set (change) manufacturer
+    //      return result
+    //  else return phone not found
+
+
+    //todo H write pseudocode for deleting a phone (add annotations or http method names, urls, necessary parameters)
+    //  *
+    //  @DeleteMapping(value = ("/phones/{id}")
+    //  @RequestParam id
+    //  if phone by id
+    //      delete
+    //  else return phone not found
+
 }
