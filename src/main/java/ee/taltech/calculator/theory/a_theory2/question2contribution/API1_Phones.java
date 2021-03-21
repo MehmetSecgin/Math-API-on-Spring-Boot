@@ -1,13 +1,15 @@
 package ee.taltech.calculator.theory.a_theory2.question2contribution;
 
 import ee.taltech.calculator.theory.a_theory2.question2contribution.classes.Phone;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
+@RestController
+@RequestMapping("phone")
 public class API1_Phones {
 
     // todo this is contribution question
@@ -24,43 +26,38 @@ public class API1_Phones {
     //todo practical assignment
     // Management wants to define an API endpoint so frontend can display data about phones (think phone e-shop)
     // A Add necessary annotations to this class so this class can serve data
-
-    //Done with Lomboks Getter and Setter
+    // Added @Service to this class.
+    @Autowired
 
     //todo B Add a method to query all the phones (method content is not important - I am grading urls, annotations, names, and parameters)
 
     @GetMapping(value = "/phones")
-    public List<Phone> getAllPhones() {
+    public List<Phone> getAllPhones(@RequestParam Optional<String> manufacturer,@RequestParam Optional<String> year) {
         List<Phone> phones = new ArrayList<>();
         phones.add(new Phone());
         phones.add(new Phone());
 
-        return phones;
-    }
-    //todo C Add a method to query a single phone by it's unique identifier (method content is not important - I am grading urls, annotations, names, and parameters)
-
-    @GetMapping(value = "/phones")
-    public List<Phone> getPhone(
-            @RequestParam Long id,
-            @RequestParam Optional<String> manufacturer,
-            @RequestParam Optional<String> year)
-    {
-
         if (manufacturer.isPresent())
-            return getAllPhones()
+            return phones
                     .stream()
                     .filter(phone -> phone.getManufacturer().equals(manufacturer))
                     .collect(Collectors.toList());
         else if (year.isPresent())
-            return getAllPhones()
+            return phones
                     .stream()
                     .filter(phone -> phone.getReleaseYear().equals(year))
                     .collect(Collectors.toList());
-        else
-            return getAllPhones()
-                    .stream()
-                    .filter(phone -> phone.getId().equals(id))
-                    .collect(Collectors.toList());
+        return phones;
+    }
+    //todo C Add a method to query a single phone by it's unique identifier (method content is not important - I am grading urls, annotations, names, and parameters)
+
+    @GetMapping(value = "/phones/{id}")
+    public List<Phone> getPhone(@PathVariable Long id) {
+
+        return getAllPhones(null,null)
+                .stream()
+                .filter(phone -> phone.getId().equals(id))
+                .collect(Collectors.toList());
     }
 
 
@@ -71,26 +68,28 @@ public class API1_Phones {
     //todo F write pseudocode for saving a new phone (add annotations or http method names, urls, necessary parameters)
     //  *
     // @RestController
-    // @PutMapping /newPhone?input=
-    // @Pathvariable
+    // @PostMapping ("/newPhone")
+    // @Pathvariable List input
     // create new phone
     // set id to phone
-    // set manufacturer to phone
-    // set modelNr to phone
-    // set rating to phone
-    // set releaseYear to phone
+    // set input.manufacturer to phone
+    // set input.modelNr to phone
+    // set input.rating to phone
+    // set input.releaseYear to phone
     // return new phone
 
     //todo G write pseudocode for updating existing phone (add annotations or http method names, urls, necessary parameters)
     //  *
-    //  @PutMapping("/{id}?input=")
-    //  @RequestParam("phones/{id}" Long) @PathVariable List input
+    //  @PutMapping("/phones/{id}")
+    //  @RequestParam id
+    //  @PathVariable List input
     //  List result = input stream
     //  if stream contains id
     //      get phone by id
-    //      get phones manufacturer
-    //      set (change) manufacturer
-    //      return result
+    //      if manufacturer in stream
+    //          get phones manufacturer
+    //          set (change) manufacturer
+    //      return phone
     //  else return phone not found
 
 
