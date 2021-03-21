@@ -1,13 +1,15 @@
 package ee.taltech.calculator.theory.a_theory2.question2contribution;
 
 import ee.taltech.calculator.theory.a_theory2.question2contribution.classes.Cake;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@RestController
+@RequestMapping("cake")
 public class API2_Cakes {
 
     // todo this is contribution question
@@ -26,17 +28,18 @@ public class API2_Cakes {
     // A Add necessary annotations to this class so this class can serve data
 
     //todo B Add a method to query all the cakes (method content is not important - I am grading urls, annotations, names, and parameters)
-
+    @Autowired
     @GetMapping(value = "/cakes")
     public List<Cake> allCakes() {
         List<Cake> cakes = new ArrayList<>();
         return cakes;
     }
 
+
     //todo C Add a method to query a single cake by it's unique identifier (method content is not important - I am grading urls, annotations, names, and parameters)
 
-    @GetMapping(value = "/cakes")
-    public List<Cake> getCake(@RequestParam Long id, @RequestParam Optional<String> weight, @RequestParam Optional<String> name) {
+    @GetMapping(value = "/cakes/{id}")
+    public List<Cake> getCake(@PathVariable Long id, @RequestParam Optional<String> weight, @RequestParam Optional<String> name) {
         List<Cake> queryCakes = new ArrayList<>();
         for (Cake cake : allCakes()) {
             Long queryId = cake.getId();
@@ -46,11 +49,12 @@ public class API2_Cakes {
                 queryCakes.add(cake);
             else if (name == queryName)
                 queryCakes.add(cake);
-            else if (id == queryId)
+            else if (id.equals(queryId))
                 queryCakes.add(cake);
         }
         return queryCakes;
     }
+
 
 
     //todo D Modify an existing method to query/filter cakes by weight while keeping existing functionality
@@ -61,10 +65,9 @@ public class API2_Cakes {
     //todo theoretical assignment
     //
     //  F write pseudocode for saving a new cake (add annotations or http method names, urls, necessary parameters)
-    //  @PutMapping /newCake?input=
-    //  @Pathvariable
+    //  @PutMapping /newCake
+    //  @Pathvariable input
     //  create cake
-    //  set cake.id = input.id
     //  set cake.sweetness = input.sweetness
     //  set cake.size = input.size
     //  set cake.weight = input.weight
@@ -72,12 +75,12 @@ public class API2_Cakes {
     //  return cake
 
     // G write pseudocode for updating existing cake (add annotations or http method names, urls, necessary parameters)
-    //  @PutMapping updateCake/{id}?input=
-    //  @RequestParam(value="id")Long , @PathVariable List param
-    //  List result = param.stream()
-    //  if stream includes id
+    //  @PutMapping (updateCake/{id})
+    //  @RequestParam(value="id")Long id ,
+    //  @PathVariable List param
+    //  if param includes id
     //      get cake by id
-    //      setSweetness("10")
+    //      setSweetness(param.sweetness)
     //      return cake
     //  else
     //      return cake not found
